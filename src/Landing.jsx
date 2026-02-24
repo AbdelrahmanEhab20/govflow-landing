@@ -8,6 +8,7 @@ import { Benefits } from './sections/Benefits.jsx';
 import { Security } from './sections/Security.jsx';
 import { CTA } from './sections/CTA.jsx';
 import { Footer } from './sections/Footer.jsx';
+import { Contact } from './sections/Contact.jsx';
 
 export default function Landing() {
   return (
@@ -19,7 +20,8 @@ export default function Landing() {
       <Features />
       <Benefits />
       <Security />
-      <CTA />
+      {/* <CTA /> */}
+      <Contact />
       <Footer />
     </div>
   );

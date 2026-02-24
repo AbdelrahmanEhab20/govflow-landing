@@ -31,17 +31,19 @@ export function Security() {
               Built to meet the rigorous security and compliance standards of governments and enterprises.
             </p>
           </FadeUp>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             {security.map((s, i) => {
               const Icon = s.icon;
               return (
                 <FadeUp key={i} delay={i * 0.1}>
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm hover:bg-white/10 transition-colors">
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm hover:bg-white/10 transition-colors h-full flex flex-col min-h-[220px]">
                     <div className="w-12 h-12 bg-blue-600/20 rounded-2xl flex items-center justify-center mb-5">
                       <Icon className="w-6 h-6 text-blue-400" />
                     </div>
                     <h3 className="text-xl font-semibold text-white mb-3">{s.title}</h3>
-                    <p className="text-slate-400 leading-relaxed">{s.desc}</p>
+                    <p className="text-slate-400 leading-relaxed">
+                      {s.desc}
+                    </p>
                   </div>
                 </FadeUp>
               );
