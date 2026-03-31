@@ -224,9 +224,8 @@ export function Contact() {
                     type="submit"
                     size="lg"
                     disabled={isSubmitting}
-                    className={`w-full bg-blue-600 hover:bg-blue-500 text-white ${
-                      isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
-                    }`}
+                    className={`w-full bg-blue-600 hover:bg-blue-500 text-white ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                      }`}
                   >
                     {isSubmitting ? 'Sending…' : 'Submit Inquiry'}
                   </Button>
@@ -249,4 +248,3 @@ export function Contact() {
     </section>
   );
 }
-

@@ -6,7 +6,7 @@ import { SolutionBanner } from './sections/SolutionBanner.jsx';
 import { Features } from './sections/Features.jsx';
 import { Benefits } from './sections/Benefits.jsx';
 import { Security } from './sections/Security.jsx';
-import { CTA } from './sections/CTA.jsx';
+// import { CTA } from './sections/CTA.jsx';
 import { Footer } from './sections/Footer.jsx';
 import { Contact } from './sections/Contact.jsx';
 
