@@ -3,11 +3,14 @@ import { AnimatedSection } from '../components/shared/AnimatedSection.jsx';
 import { FadeUp } from '../components/shared/FadeUp.jsx';
 import { Button } from '../components/ui/Button.jsx';
 import { BarChart3, Building2 } from 'lucide-react';
+import { useToast } from '../components/ui/ToastProvider.jsx';
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { addToast } = useToast();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
@@ -25,10 +28,51 @@ export function Contact() {
     };
 
     if (!payload.name || !payload.email) {
+      addToast({
+        type: 'error',
+        title: 'Missing information',
+        message: 'Please provide at least your name and work email.',
+      });
       return;
     }
 
-    setSubmitted(true);
+    setIsSubmitting(true);
+
+    try {
+      const endpoint =
+        import.meta.env.VITE_CONTACT_ENDPOINT || 'http://localhost:4000/api/contact';
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit contact form');
+      }
+
+      setSubmitted(true);
+      addToast({
+        type: 'success',
+        title: 'Message sent',
+        message: 'We received your inquiry and emailed you a confirmation.',
+      });
+
+      e.currentTarget.reset();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      addToast({
+        type: 'error',
+        title: 'Something went wrong',
+        message: 'We could not send your message. Please try again in a moment.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -91,7 +135,7 @@ export function Contact() {
             <div>
               <form
                 onSubmit={handleSubmit}
-                className="bg-slate-900/60 border border-slate-700 rounded-3xl p-6 md:p-8 shadow-xl space-y-5"
+                className="bg-slate-900/60 border border-slate-700 rounded-3xl p-6 md:p-8 shadow-xl space-y-5 overflow-hidden"
               >
                 <input
                   type="text"
@@ -170,7 +214,7 @@ export function Contact() {
                     name="message"
                     rows={4}
                     maxLength={2000}
-                    className="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                    className="w-full rounded-xl border border-slate-700 bg-slate-900/60 px-3 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y overflow-y-auto break-words whitespace-pre-wrap leading-relaxed"
                     placeholder="Share a bit about your current workflows, challenges, or goals."
                   />
                 </div>
@@ -179,9 +223,12 @@ export function Contact() {
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full bg-blue-600 hover:bg-blue-500 text-white"
+                    disabled={isSubmitting}
+                    className={`w-full bg-blue-600 hover:bg-blue-500 text-white ${
+                      isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                    }`}
                   >
-                    Submit Inquiry
+                    {isSubmitting ? 'Sending…' : 'Submit Inquiry'}
                   </Button>
                   <p className="text-xs text-slate-500">
                     By submitting, you agree to be contacted about GovFlow. We&apos;ll
