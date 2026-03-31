@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown, Play } from 'lucide-react';
 import { Badge } from '../components/ui/Badge.jsx';
 import { Button } from '../components/ui/Button.jsx';
 
-export function Hero() {
+export function Hero({ onOpenTour }) {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 pt-24 md:pt-32 pb-20">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -67,6 +67,13 @@ export function Hero() {
               Get Started <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </a>
+          <Button
+            size="lg"
+            onClick={onOpenTour}
+            className="border-white/20 text-white bg-white/10 hover:bg-white/20 text-lg px-8 py-6 rounded-xl border"
+          >
+            <Play className="w-5 h-5 mr-2" /> Interactive Tour
+          </Button>
           <a href="#features">
             <Button
               size="lg"
